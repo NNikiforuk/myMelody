@@ -1,46 +1,80 @@
-import React, { useState, ChangeEvent, KeyboardEvent, useEffect } from "react";
+import React, { useState, ChangeEvent, KeyboardEvent } from "react";
 import headerStyles from "./header.module.scss";
 
 function Header() {
-	const [isEditing, setIsEditing] = useState(false);
+	const [isEditingTitle, setIsEditingTitle] = useState(false);
 	const [title, setTitle] = useState("Song title");
+	const [author, setAuthor] = useState("The author");
+	const [isEditingAuthor, setIsEditingAuthor] = useState(false);
 
-	const handleClick = () => {
-		setIsEditing(true);
+	const handleClickTitle = () => {
+		setIsEditingTitle(true);
 	};
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleClickAuthor = () => {
+		setIsEditingAuthor(true);
+	};
+
+	const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
 		setTitle(e.target.value);
 	};
 
-	const submitEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+	const handleAuthorChange = (e: ChangeEvent<HTMLInputElement>) => {
+		setAuthor(e.target.value);
+	};
+
+	const submitTitleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
 		if (e.key === "Enter") {
-			setIsEditing(false);
+			setIsEditingTitle(false);
 		}
 	};
 
-	const submitBackground = () => {
-		setIsEditing(false);
+	const submitAuthorEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === "Enter") {
+			setIsEditingAuthor(false);
+		}
+	};
+
+	const submitBackgroundTitle = () => {
+		setIsEditingTitle(false);
+	};
+
+	const submitBackgroundAuthor = () => {
+		setIsEditingAuthor(false);
 	};
 
 	return (
-		<div>
-			{isEditing ? (
+		<div className="header">
+			{isEditingTitle ? (
 				<div className={headerStyles.titleInput}>
 					<input
 						type="text"
 						value={title}
-						onChange={handleInputChange}
-						onKeyDown={(e) => submitEnter(e)}
-						onBlur={() => submitBackground()}
+						onChange={handleTitleChange}
+						onKeyDown={(e) => submitTitleEnter(e)}
+						onBlur={() => submitBackgroundTitle()}
 					/>
 				</div>
 			) : (
-				<h1 className={headerStyles.title} onClick={handleClick}>
+				<h1 className={headerStyles.title} onClick={handleClickTitle}>
 					{title}
 				</h1>
 			)}
-			<h2 className={headerStyles.author}>The author</h2>
+			{isEditingAuthor ? (
+				<div className={headerStyles.authorInput}>
+					<input
+						type="text"
+						value={author}
+						onChange={handleAuthorChange}
+						onKeyDown={(e) => submitAuthorEnter(e)}
+						onBlur={() => submitBackgroundAuthor()}
+					/>
+				</div>
+			) : (
+				<h2 className={headerStyles.author} onClick={handleClickAuthor}>
+					{author}
+				</h2>
+			)}
 		</div>
 	);
 }
