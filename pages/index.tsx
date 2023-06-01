@@ -2,7 +2,7 @@ import Head from "next/head";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import Header from "../components/Header";
 import Main from "../components/Main";
-import Aside from "../components/Aside";
+import Aside from "../components/Palette";
 import Footer from "../components/Footer";
 import Favicon from "../utils/Favicon";
 
